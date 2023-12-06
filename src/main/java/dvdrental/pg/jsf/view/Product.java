@@ -1,6 +1,6 @@
 package dvdrental.pg.jsf.view;
+
 import java.io.Serializable;
-import java.util.List;
 
 public class Product implements Serializable {
 

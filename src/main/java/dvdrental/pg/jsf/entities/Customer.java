@@ -105,6 +105,10 @@ public class Customer {
     }
 
     public String getAddressLine() {
-        return address.getPostalCode() + ", " + address.getAddress() + ", " + address.getDistrict() + ", " + address.getPhone();
+        return address.getPostalCode() + ", " +
+                address.getCity().getCity() + ", " +
+                address.getAddress() + ", " +
+                address.getDistrict() + ", " +
+                address.getCity().getCountry().getCountry();
     }
 }

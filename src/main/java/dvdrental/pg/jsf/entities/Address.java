@@ -18,8 +18,9 @@ public class Address {
     private String address2;
     @Column(name = "district")
     private String district;
-    @Column(name = "city_id")
-    private Integer cityId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "city_id")
+    private City city;
     @Column(name = "postal_code")
     private String postalCode;
     @Column(name = "phone")
@@ -60,14 +61,6 @@ public class Address {
         this.district = district;
     }
 
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
     public String getPostalCode() {
         return postalCode;
     }
@@ -90,5 +83,13 @@ public class Address {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
