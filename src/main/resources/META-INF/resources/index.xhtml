@@ -3,9 +3,12 @@
 <html lang="en-us"
 
       xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:ui="jakarta.faces.facelets">
+
+<f:view contentType="text/html">
 
     <h:head>
         <title>Customers</title>
@@ -16,10 +19,11 @@
         <h:form>
             <div class="card">
                 <ul>
-                    <li><p:link value="Actors" outcome="actors" /></li>
-                    <li><p:link value="Customers" outcome="customers" /></li>
+                    <li><p:link value="Actors" outcome="/protected/actors" /></li>
+                    <li><p:link value="Customers" outcome="/protected/customers" /></li>
                 </ul>
             </div>
         </h:form>
     </h:body>
+</f:view>
 </html>
