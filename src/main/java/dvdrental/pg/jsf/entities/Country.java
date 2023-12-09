@@ -54,4 +54,14 @@ public class Country {
     public void setCities(Set<City> cities) {
         this.cities = cities;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Country{");
+        sb.append("id=").append(id);
+        sb.append(", country='").append(country).append('\'');
+        sb.append(", lastUpdate=").append(lastUpdate);
+        sb.append('}');
+        return sb.toString();
+    }
 }

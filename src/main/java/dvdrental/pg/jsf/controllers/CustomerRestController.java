@@ -2,6 +2,7 @@ package dvdrental.pg.jsf.controllers;
 
 import dvdrental.pg.jsf.entities.Customer;
 import dvdrental.pg.jsf.repos.CustomerJpaRepository;
+import dvdrental.pg.jsf.services.CustomerService;
 import jakarta.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +19,16 @@ import java.util.Optional;
 public class CustomerRestController {
 
     @Inject
-    private CustomerJpaRepository repository;
+    private CustomerService customerService;
 
     @GetMapping("/")
     public ResponseEntity<List<Customer>> getCustomers() {
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(customerService.getAllCustomers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Integer id) {
-        Optional<Customer> customerOptional = repository.findById(id);
+        Optional<Customer> customerOptional = customerService.getCustomerById(id);
         return customerOptional
                 .map(customer -> new ResponseEntity<>(customer, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

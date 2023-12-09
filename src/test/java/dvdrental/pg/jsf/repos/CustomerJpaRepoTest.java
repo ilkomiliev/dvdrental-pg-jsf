@@ -31,4 +31,13 @@ public class CustomerJpaRepoTest {
         List<Customer> customers = repository.findAll();
         assertThat(customers).hasSize(6);
     }
+
+    @Test
+    public void testGetAllCustomers() {
+        List<Customer> allCustomers = repository.getAllCustomers();
+        assertThat(allCustomers).hasSize(6);
+        for (Customer customer : allCustomers) {
+            System.out.println(customer);
+        }
+    }
 }
