@@ -3,6 +3,7 @@ package dvdrental.pg.jsf.entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -18,7 +19,7 @@ public class Address {
     private String address2;
     @Column(name = "district")
     private String district;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
     @Column(name = "postal_code")
@@ -28,6 +29,9 @@ public class Address {
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
+    @OneToMany(mappedBy = "address")
+    private Set<Customer> customers;
 
     public Integer getId() {
         return id;
@@ -91,5 +95,28 @@ public class Address {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Address{");
+        sb.append("id=").append(id);
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", address2='").append(address2).append('\'');
+        sb.append(", district='").append(district).append('\'');
+        sb.append(", city=").append(city);
+        sb.append(", postalCode='").append(postalCode).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", lastUpdate=").append(lastUpdate);
+        sb.append('}');
+        return sb.toString();
     }
 }

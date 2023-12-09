@@ -1,9 +1,9 @@
 package dvdrental.pg.jsf.entities;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "country")
@@ -19,6 +19,9 @@ public class Country {
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
+    @OneToMany(mappedBy = "country")
+    private Set<City> cities;
 
     public Integer getId() {
         return id;
@@ -42,5 +45,13 @@ public class Country {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public Set<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(Set<City> cities) {
+        this.cities = cities;
     }
 }

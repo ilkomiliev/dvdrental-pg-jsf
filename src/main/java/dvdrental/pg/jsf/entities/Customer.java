@@ -1,6 +1,9 @@
 package dvdrental.pg.jsf.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Subselect;
 
 import java.util.Date;
 
@@ -28,7 +31,7 @@ public class Customer {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -110,5 +113,21 @@ public class Customer {
                 address.getAddress() + ", " +
                 address.getDistrict() + ", " +
                 address.getCity().getCountry().getCountry();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Customer{");
+        sb.append("id=").append(id);
+        sb.append(", storeId=").append(storeId);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", activeBool=").append(activeBool);
+        sb.append(", createDate=").append(createDate);
+        sb.append(", lastUpdate=").append(lastUpdate);
+        sb.append(", address=").append(address);
+        sb.append('}');
+        return sb.toString();
     }
 }

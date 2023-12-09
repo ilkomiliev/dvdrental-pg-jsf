@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -34,6 +35,7 @@ public class SecurityConfig {
                             .requestMatchers(mvc.pattern("/")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/**.faces")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/jakarta.faces.resource/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/protected/customers.**")).hasAuthority("ADMIN")
                             .anyRequest().authenticated())
                     .formLogin((formLogin) ->
                             formLogin.loginPage("/login.faces")
@@ -66,10 +68,11 @@ public class SecurityConfig {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         InMemoryUserDetailsManager result = new InMemoryUserDetailsManager();
         for (UserCredentials userCredentials : applicationUsers.getUserCredentials()) {
-            result.createUser(User.builder()
+            UserDetails userDetails = User.builder()
                     .username(userCredentials.getUsername())
                     .password(encoder.encode(userCredentials.getPassword()))
-                    .authorities(userCredentials.getAuthorities().toArray(new String[0])).build());
+                    .authorities(userCredentials.getAuthorities().toArray(new String[0])).build();
+            result.createUser(userDetails);
         }
         return result;
     }
