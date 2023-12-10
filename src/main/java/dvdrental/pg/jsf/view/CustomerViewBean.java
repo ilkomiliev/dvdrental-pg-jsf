@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.primefaces.model.LazyDataModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,17 +16,17 @@ import java.util.List;
 @ViewScoped
 public class CustomerViewBean implements Serializable {
 
-    private List<Customer> customers;
+    private LazyDataModel<Customer> model;
     @Inject
     private transient CustomerService service;
 
     @PostConstruct
     public void init() {
-        customers = service.getAllCustomers();
+        model = new CustomerViewLazyDataModel(service);
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public LazyDataModel<Customer> getModel() {
+        return model;
     }
 
     public void setService(CustomerService service) {

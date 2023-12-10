@@ -18,11 +18,12 @@
     <h:body>
         <h:form>
             <div class="card">
-                <p:dataTable var="customer" value="#{dtCustomerView.customers}" rows="25"
+                <p:dataTable var="customer" value="#{dtCustomerView.model}" rows="25"
                              paginator="true" paginatorPosition="both"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                             rowsPerPageTemplate="15,25,{ShowAll|'All'}">
+                             rowsPerPageTemplate="15,25,{ShowAll|'All'}"
+                             id="customersTable">
 
                     <p:column headerText="Id">
                         <h:outputText value="#{customer.id}" />
