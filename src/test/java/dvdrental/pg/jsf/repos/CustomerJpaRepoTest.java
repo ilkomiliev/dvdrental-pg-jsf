@@ -29,15 +29,25 @@ public class CustomerJpaRepoTest {
     @Test
     public void testFindAll() {
         List<Customer> customers = repository.findAll();
-        assertThat(customers).hasSize(6);
+        checkCustomersAreFullyInitialized(customers);
     }
 
     @Test
     public void testGetAllCustomers() {
-        List<Customer> allCustomers = repository.getAllCustomers();
-        assertThat(allCustomers).hasSize(6);
-        for (Customer customer : allCustomers) {
+        List<Customer> customers = repository.getAllCustomers();
+        checkCustomersAreFullyInitialized(customers);
+    }
+
+    private void checkCustomersAreFullyInitialized(List<Customer> customers) {
+        assertThat(customers).hasSize(6);
+        customers.forEach(customer -> {
             System.out.println(customer);
-        }
+            assertThat(customer.getAddress()).isNotNull();
+            assertThat(customer.getAddress().getAddress()).isNotEmpty();
+            assertThat(customer.getAddress().getCity()).isNotNull();
+            assertThat(customer.getAddress().getCity().getCity()).isNotEmpty();
+            assertThat(customer.getAddress().getCity().getCountry()).isNotNull();
+            assertThat(customer.getAddress().getCity().getCountry().getCountry()).isNotEmpty();
+        });
     }
 }

@@ -1,40 +1,30 @@
 package dvdrental.pg.jsf.services;
 
+import dvdrental.pg.jsf.entities.Address;
 import dvdrental.pg.jsf.entities.Customer;
+import dvdrental.pg.jsf.repos.AddressJpaRepository;
 import dvdrental.pg.jsf.repos.CustomerJpaRepository;
 import jakarta.inject.Inject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
-
     @Inject
-    private CustomerJpaRepository repository;
+    private CustomerJpaRepository customerRepository;
+    @Inject
+    private AddressJpaRepository addressRepository;
 
-    public CustomerService(CustomerJpaRepository repository) {
-        this.repository = repository;
+    public CustomerService(CustomerJpaRepository customerRepository, AddressJpaRepository addressRepository) {
+        this.customerRepository = customerRepository;
+        this.addressRepository = addressRepository;
     }
 
-    public List<Customer> getAllCustomers() {
-        return repository.getAllCustomers();
-    }
-
-    public Long count() {
-        return repository.count();
-    }
-
-    public Optional<Customer> getCustomerById(Integer id) {
-        return repository.findById(id);
-    }
-
-    public List<Customer> findAll(int pageNumber, int pageSize, Sort sort) {
-        Page<Customer> customers = repository.findAll(PageRequest.of(pageNumber, pageSize, sort));
-        return customers.stream().toList();
+    @Transactional
+    public Customer updateCustomerAddress(Integer customerId, Integer newAddressId) {
+        Customer customer = customerRepository.findById(customerId).orElseThrow();
+        Address address = addressRepository.findById(newAddressId).orElseThrow();
+        customer.setAddress(address);
+        return customerRepository.save(customer);
     }
 }

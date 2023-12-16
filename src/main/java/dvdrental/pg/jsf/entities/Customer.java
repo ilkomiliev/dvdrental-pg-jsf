@@ -1,14 +1,46 @@
 package dvdrental.pg.jsf.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Subselect;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "customer")
+@SqlResultSetMapping(name = "CustomerFullResults", entities = {
+        @EntityResult(entityClass = Customer.class, fields = {
+                @FieldResult(name = "id", column = "customer_id"),
+                @FieldResult(name = "storeId", column = "store_id"),
+                @FieldResult(name = "firstName", column = "first_name"),
+                @FieldResult(name = "lastName", column = "last_name"),
+                @FieldResult(name = "email", column = "email"),
+                @FieldResult(name = "activeBool", column = "activebool"),
+                @FieldResult(name = "createDate", column = "create_date"),
+                @FieldResult(name = "lastUpdate", column = "customer_last_update")
+        }),
+        @EntityResult(entityClass = Address.class, fields = {
+                @FieldResult(name = "id", column = "address_id"),
+                @FieldResult(name = "address", column = "address"),
+                @FieldResult(name = "address2", column = "address2"),
+                @FieldResult(name = "district", column = "district"),
+                @FieldResult(name = "postalCode", column = "postal_code"),
+                @FieldResult(name = "phone", column = "phone"),
+                @FieldResult(name = "lastUpdate", column = "address_last_update")
+        }),
+        @EntityResult(entityClass = City.class, fields = {
+                @FieldResult(name = "id", column = "city_id"),
+                @FieldResult(name = "city", column = "city"),
+                @FieldResult(name = "lastUpdate", column = "city_last_update"),
+        }),
+        @EntityResult(entityClass = Country.class, fields = {
+                @FieldResult(name = "id", column = "country_id"),
+                @FieldResult(name = "country", column = "country"),
+                @FieldResult(name = "lastUpdate", column = "country_last_update")
+        })
+})
+@NamedNativeQuery(name = "findAllCustomersNative",
+        query = NativeQueries.CUSTOMER_FULL_SQL,
+        resultSetMapping = "CustomerFullResults"
+)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
