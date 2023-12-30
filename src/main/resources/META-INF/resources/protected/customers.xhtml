@@ -23,17 +23,18 @@
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                              rowsPerPageTemplate="15,25,{ShowAll|'All'}"
+                             sortBy="#{dtCustomerView.defaultSortBy}"
                              id="customersTable">
 
-                    <p:column headerText="Id">
+                    <p:column headerText="Id" field="id" visible="#{dtCustomerView.debugModeOn}">
                         <h:outputText value="#{customer.id}" />
                     </p:column>
 
-                    <p:column headerText="First Name">
+                    <p:column headerText="First Name" sortBy="#{customer.firstName}" filterBy="#{customer.firstName}" field="firstName">
                         <h:outputText value="#{customer.firstName}" />
                     </p:column>
 
-                    <p:column headerText="Last Name">
+                    <p:column headerText="Last Name" sortBy="#{customer.lastName}" filterBy="#{customer.lastName}" field="lastName">
                         <h:outputText value="#{customer.lastName}" />
                     </p:column>
 

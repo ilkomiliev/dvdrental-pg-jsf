@@ -7,6 +7,8 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
 import java.io.Serializable;
 
@@ -15,6 +17,9 @@ import java.io.Serializable;
 public class CustomerViewBean implements Serializable {
 
     private LazyDataModel<Customer> model;
+    private SortMeta defaultSortBy;
+
+    private boolean debugModeOn;
     @Inject
     private transient CustomerJpaRepository customerJpaRepository;
 
@@ -29,5 +34,13 @@ public class CustomerViewBean implements Serializable {
 
     public void setCustomerJpaRepository(CustomerJpaRepository customerJpaRepository) {
         this.customerJpaRepository = customerJpaRepository;
+    }
+
+    public SortMeta getDefaultSortBy() {
+        return SortMeta.builder().field("id").order(SortOrder.ASCENDING).build();
+    }
+
+    public boolean isDebugModeOn() {
+        return debugModeOn;
     }
 }
